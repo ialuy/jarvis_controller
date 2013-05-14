@@ -55,8 +55,11 @@ news - get the latest news from @BBCBreaking
             system('say Thank you for asking politely.')
         system('say The latest news from BBC are: ')
 
-    ## Default    
+    ## Default   
     else:
+        if "quit" in user_input:
+            system('say Goodbye. Always a pleasure.')
+            sys.exit(0)
         system('say I am sorry, but I do not understand your query.')
         sys.exit(0)
 
