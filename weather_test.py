@@ -36,7 +36,7 @@ news - get the latest news from @BBCBreaking
         get_web_data()
 
     ## Weather
-    elif "weather" in user_input:
+    elif "weather" in user_input and "news" not in user_input:
         system('say Which city would you check?')
         city = raw_input("Choose city: ")
         if city == "Oslo":
@@ -49,11 +49,17 @@ news - get the latest news from @BBCBreaking
         system('say The weather forecast for ' + city + ' is')
 
     ## News
-    elif "news" in user_input:
+    elif "news" in user_input and "weather" not in user_input:
         twitter_adr = BBC_news
         if "please" in user_input:
             system('say Thank you for asking politely.')
         system('say The latest news from BBC are: ')
+
+    ## Request twitter username
+    elif "personal" in user_input:
+        system('say Which user do you want me to check?')
+        twitter_adr = raw_input("Enter twitter user here: ")
+        system('say Okay, the latest tweet from ' + twitter_adr + ', is')
 
     ## Default   
     else:
@@ -66,8 +72,8 @@ news - get the latest news from @BBCBreaking
     get_data = api.GetUserTimeline(twitter_adr)
     read_data = [s.text for s in get_data]
     data_content = read_data[0]
-    print(str(data_content))    
-    mod_data = re.sub(r"[#&/]", "", data_content) # alter list of unwanted characters
+    print(str(data_content))
+    mod_data = re.sub(r"[(#&);]", "", data_content) # alter list of unwanted characters
     system('say ' + mod_data)
 #endregion
 
