@@ -8,7 +8,7 @@ import re
 #endregion
 
 ## Authenticate yourself with Twitter
-api = twitter.Api(consumer_key='Y7Uw0oDAojq1SyAMJY0w', consumer_secret='8Mlowssv23wDzzTIZmucj4dlmh7XT1kx1ZzKacsimTY', access_token_key='21760851-pRlUbHvzaDhDwOO1h4BS2SlLPrPGouaAB45fFvNnu', access_token_secret='xGJpM8cQ6KFOQQOhySdDtj853QgDbpJkFChMztVUjZA')
+api = twitter.Api(consumer_key='consumer_key', consumer_secret='consumer_secret', access_token_key='access_token_key', access_token_secret='access_token_secret')
 
 ## Welcome message
 system('say Testing information retrieval controlled through Twitter.')
@@ -30,8 +30,9 @@ def get_web_data():
     if "help" in user_input:
         system('say Here is a list of available commands')
         print ("""\n**************
-weather - check the weather forecast in a specific city
+weather - get the latest weather report for a specific city
 news - get the latest news from @BBCBreaking
+persona - get the lastest updates from a specified twitter account
 **************\n""")
         get_web_data()
 
@@ -69,12 +70,13 @@ news - get the latest news from @BBCBreaking
         system('say I am sorry, but I do not understand your query.')
         sys.exit(0)
 
-    get_data = api.GetUserTimeline(twitter_adr)
-    read_data = [s.text for s in get_data]
-    data_content = read_data[0]
-    print(str(data_content))
-    mod_data = re.sub(r"[(#&);]", "", data_content) # alter list of unwanted characters
-    system('say ' + mod_data)
+    ## GET Twitter status
+    get_data = api.GetUserTimeline(twitter_adr) ## get information from user
+    read_data = [s.text for s in get_data] ## organise twitter statuses into array
+    data_content = read_data[0] ## get the first item of the array
+    print(str(data_content)) ## print original tweet
+    mod_data = re.sub(r"[(#&);]", "", data_content) ## remove unwanted characters
+    system('say ' + mod_data) ## read tweet
 #endregion
 
 get_web_data()
